@@ -38,7 +38,6 @@ Before running the project, make sure you have installed:
    spring.jpa.show-sql=true
 
 
-
 ## 🚀 Running the Project
 ## 1️⃣ Run Backend (Spring Boot)
 
