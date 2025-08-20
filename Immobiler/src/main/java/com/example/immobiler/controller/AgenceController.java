@@ -1,6 +1,8 @@
 package com.example.immobiler.controller;
 
+import com.example.immobiler.dto.AgenceRegisterRequest;
 import com.example.immobiler.entity.Agence;
+import com.example.immobiler.entity.Utilisateur;
 import com.example.immobiler.service.AgenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,4 +63,11 @@ public class AgenceController {
     public List<Agence> getByProprietaire(@PathVariable Long userId) {
         return agenceService.findByProprietaireId(userId);
     }
+
+    @PostMapping("/register")
+// @PreAuthorize("hasAuthority('MANAGE_USERS')") // désactiver pour test
+    public Agence registerAgence(@RequestBody AgenceRegisterRequest request) {
+        return agenceService.registerAgence(request.getAgence(), request.getUser());
+    }
+
 }

@@ -30,9 +30,13 @@ public class Utilisateur implements UserDetails {
 
     private LocalDateTime dateCreation = LocalDateTime.now();
 
+    @OneToOne(mappedBy = "proprietaire")
+    private Agence agence;
+
+
     // Getters / Setters
 
-    public Utilisateur(Long id, String nom, String email, String motDePasse, Role role, Boolean confirmeEmail, String emailToken, LocalDateTime dateCreation) {
+    public Utilisateur(Long id, String nom, String email, String motDePasse, Role role, Boolean confirmeEmail, String emailToken, LocalDateTime dateCreation,Agence agence) {
         this.id = id;
         this.nom = nom;
         this.email = email;
@@ -41,9 +45,23 @@ public class Utilisateur implements UserDetails {
         this.confirmeEmail = confirmeEmail;
         this.emailToken = emailToken;
         this.dateCreation = dateCreation;
+        this.agence=agence;
+
     }
 
     public Utilisateur() {
+    }
+
+    public Boolean getConfirmeEmail() {
+        return confirmeEmail;
+    }
+
+    public Agence getAgence() {
+        return agence;
+    }
+
+    public void setAgence(Agence agence) {
+        this.agence = agence;
     }
 
     public Long getId() {

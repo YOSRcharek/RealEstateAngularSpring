@@ -16,8 +16,9 @@ public class Agence {
 
     private String contact;
 
-    @ManyToOne
-    @JoinColumn(name = "proprietaire_id")
+
+    @OneToOne
+    @JoinColumn(name = "proprietaire", referencedColumnName = "id")
     private Utilisateur proprietaire;
 
     private LocalDateTime dateCreation = LocalDateTime.now();

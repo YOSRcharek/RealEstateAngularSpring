@@ -26,6 +26,9 @@ public class UtilisateurService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    private EmailService emailService;
+
         // ---------------- CRUD ----------------
         public List<Utilisateur> getAll() {
             return utilisateurRepository.findAll();
@@ -44,15 +47,24 @@ public class UtilisateurService {
         }
 
         // ---------------- Register (Sign Up) ----------------
+
         public Utilisateur register(Utilisateur utilisateur) {
             utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
-            utilisateur.setRole(Role.USER); // rôle par défaut
-            utilisateur.setEmailToken(UUID.randomUUID().toString()); // token pour email
+            utilisateur.setRole(Role.USER);
+            utilisateur.setEmailToken(UUID.randomUUID().toString());
             utilisateur.setConfirmeEmail(false);
-            // TODO : envoyer email avec le token
-            return utilisateurRepository.save(utilisateur);
+
+            Utilisateur savedUser = utilisateurRepository.save(utilisateur);
+
+            // Envoyer email de confirmation
+            String link = "http://localhost:4200/confirm-email?token=" + savedUser.getEmailToken();
+            String message = "Bonjour " + savedUser.getNom() + ",\n\nVeuillez confirmer votre email en cliquant sur ce lien : " + link;
+            emailService.sendEmail(savedUser.getEmail(), "Confirmez votre email", message);
+
+            return savedUser;
         }
-        public Optional<Utilisateur> findByEmail(String email) {
+
+    public Optional<Utilisateur> findByEmail(String email) {
             return utilisateurRepository.findByEmail(email);
         }
 

@@ -36,7 +36,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/users/login",
                                 "/api/users/register",
-                                "/api/users/confirm-email"
+                                "/api/users/confirm-email",
+                                "/api/agences/register",   // ✅ autoriser l'inscription agence
+                                "/api/**"             // ✅ autoriser auth public
                         ).permitAll()
                         .anyRequest().authenticated()
                 );
