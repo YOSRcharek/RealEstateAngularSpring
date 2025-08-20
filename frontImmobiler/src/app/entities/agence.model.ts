@@ -3,6 +3,6 @@ export interface Agence {
   id: number;
   nom: string;
   contact: string;
-  proprietaireId: number; // user_id
+  proprietaire: number; // user_id
   dateCreation: Date;
 }

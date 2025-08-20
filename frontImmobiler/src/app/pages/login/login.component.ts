@@ -25,7 +25,9 @@ export class LoginComponent {
       this.auth.login(email, password).subscribe({
         next: (res) => {
           console.log('Login réussi', res);
+             window.location.reload();
           this.router.navigate(['/']); // rediriger après login
+       
         },
         error: (err) => {
           console.log('Login failed', err);
@@ -34,4 +36,5 @@ export class LoginComponent {
       });
     }
   }
+  
 }

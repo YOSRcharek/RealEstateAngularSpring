@@ -4,15 +4,16 @@ import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { AgenceService } from './agence.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private tokenKey = 'authToken';
-  private roleKey = 'userRole';
+  private roleKey = 'role';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private agenceService: AgenceService, private router: Router) {}
 
   // Enregistrer le token + rôle
   setToken(token: string): void {
@@ -21,7 +22,7 @@ export class AuthService {
     try {
       const decoded: any = jwtDecode(token);
       if (decoded.role) {
-        this.setUserRole(decoded.role);
+        this.setrole(decoded.role);
       }
     } catch (err) {
       console.error('Erreur lors du décodage du token', err);
@@ -32,11 +33,11 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  setUserRole(role: string): void {
+  setrole(role: string): void {
     localStorage.setItem(this.roleKey, role);
   }
 
-  getUserRole(): string | null {
+  getrole(): string | null {
     return localStorage.getItem(this.roleKey);
   }
 
@@ -61,4 +62,37 @@ export class AuthService {
       })
     );
   }
+
+  register(user: any): Observable<any> {
+    return this.userService.register(user).pipe(
+      tap((res: any) => {
+        console.log('authService');
+        console.log('token', res.token);
+        if (res.token) {
+          this.setToken(res.token); // rôle extrait automatiquement
+        }
+      })
+    );
+  }
+  registerAgency(agence: any, user: any): Observable<any> {
+    // Envoie le DTO AgenceRegisterRequest
+    return this.agenceService.register(agence, user).pipe(
+      tap((res: any) => {
+        console.log('authService response', res);
+        // Pas de token attendu ici, juste retour de l'agence créée
+      })
+    );
+  }
+
+  getUserFromToken(): any | null {
+  const token = this.getToken();
+  if (!token) return null;
+
+  try {
+    return jwtDecode<any>(token); // renvoie l’objet décodé du JWT
+  } catch (err) {
+    console.error('Erreur de décodage du token', err);
+    return null;
+  }
+}
 }

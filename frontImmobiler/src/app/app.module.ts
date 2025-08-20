@@ -20,6 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PropertyDetailsComponent } from './pages/property-details/property-details.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ProfilComponent } from './pages/profil/profil.component';
+import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
+import { RegisterAgencyComponent } from './pages/register-agency/register-agency.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     HomeComponent,
     DashboardComponent,
     AddPropertyComponent,
-    PropertyDetailsComponent
+    PropertyDetailsComponent,
+    ProfilComponent,
+    ConfirmEmailComponent,
+    RegisterAgencyComponent
   ],
   imports: [
     BrowserModule,

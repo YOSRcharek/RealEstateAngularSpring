@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Agence } from '../entities/agence.model';
+import { User } from '../entities/user.model';
 
 // --- Agence model ---
 
@@ -29,6 +30,11 @@ export class AgenceService {
   create(agence: Agence): Observable<Agence> {
     return this.http.post<Agence>(this.apiUrl, agence);
   }
+register(agence: any, user: any): Observable<any> {
+  const body = { agence, user }; // ça correspond à AgenceRegisterRequest
+  return this.http.post<any>(`${this.apiUrl}/register`, body);
+}
+
 
   // Update agence
   update(id: number, agence: Agence): Observable<Agence> {
