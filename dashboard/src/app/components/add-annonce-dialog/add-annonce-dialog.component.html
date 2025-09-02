@@ -1,0 +1,132 @@
+<h2 mat-dialog-title> Add Property</h2>
+
+<mat-dialog-content>
+  <form #formRef="ngForm" (ngSubmit)="saveAnnonce()" class="form bg-white p-4" novalidate>
+
+<mat-form-field appearance="fill" class="w-full">
+  <mat-label>Agence</mat-label>
+  <mat-select [(ngModel)]="selectedAgenceId" name="agence" required>
+    <mat-option *ngFor="let ag of agences" [value]="ag.id">
+      {{ ag.nom }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+    <!-- Title -->
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]="titre" name="titre" required minlength="3" #titreRef="ngModel">
+      <mat-error *ngIf="titreRef.invalid && submitted">
+        Title is required (min 3 characters)
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="3" [(ngModel)]="description" name="description" required minlength="10" #descRef="ngModel"></textarea>
+      <mat-error *ngIf="descRef.invalid && submitted">
+        Description is required (min 10 characters)
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Price -->
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Price (TND)</mat-label>
+      <input matInput type="number" [(ngModel)]="prix" name="prix" required min="1" #prixRef="ngModel">
+      <mat-error *ngIf="prixRef.invalid && submitted">
+        Price is required and must be greater than 0
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Surface + Rooms -->
+    <div class="flex gap-3 mt-2">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Surface (m²)</mat-label>
+        <input matInput type="number" [(ngModel)]="surface" name="surface" required min="1" #surfaceRef="ngModel">
+        <mat-error *ngIf="surfaceRef.invalid && submitted">
+          Surface is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Rooms</mat-label>
+        <input matInput type="number" [(ngModel)]="nbPieces" name="nbPieces" required min="1" #nbPiecesRef="ngModel">
+        <mat-error *ngIf="nbPiecesRef.invalid && submitted">
+          Rooms is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Bedrooms + Bathrooms + Guest Rooms -->
+    <div class="flex gap-3 mt-2">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Bedrooms</mat-label>
+        <input matInput type="number" [(ngModel)]="bedrooms" name="bedrooms" min="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Bathrooms</mat-label>
+        <input matInput type="number" [(ngModel)]="bathrooms" name="bathrooms" min="0">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Guest Rooms</mat-label>
+        <input matInput type="number" [(ngModel)]="guestRooms" name="guestRooms" min="0">
+      </mat-form-field>
+    </div>
+
+    <!-- Amenities -->
+    <h5 class="mt-3 font-semibold">Amenities</h5>
+    <div class="flex gap-4 mt-2">
+      <mat-checkbox [(ngModel)]="garden" name="garden">Garden</mat-checkbox>
+      <mat-checkbox [(ngModel)]="airCondition" name="airCondition">Air Condition</mat-checkbox>
+      <mat-checkbox [(ngModel)]="parking" name="parking">Parking</mat-checkbox>
+      <mat-checkbox [(ngModel)]="internet" name="internet">Internet</mat-checkbox>
+      <mat-checkbox [(ngModel)]="pool" name="pool">Pool</mat-checkbox>
+    </div>
+
+    <!-- TypeBien -->
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Property Type</mat-label>
+      <mat-select [(ngModel)]="typeBien" name="typeBien" required>
+        <mat-option value="MAISON">House</mat-option>
+        <mat-option value="APPARTEMENT">Apartment</mat-option>
+        <mat-option value="TERRAIN">Land</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Statut -->
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="statut" name="statut" required>
+        <mat-option value="RENT">For Rent</mat-option>
+        <mat-option value="SALE">For Sale</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Adresse -->
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Address</mat-label>
+      <input matInput [(ngModel)]="adresse" name="adresse" required>
+    </mat-form-field>
+
+    <!-- Upload Images -->
+    <div class="mt-3">
+      <label class="text-gray-700">Upload Images :</label>
+      <input type="file" (change)="onFilesSelected($event)" multiple />
+      <div class="flex gap-2 flex-wrap mt-2" *ngIf="selectedFilesPreview.length > 0">
+        <div *ngFor="let preview of selectedFilesPreview; let i=index" class="relative">
+          <img [src]="preview" alt="preview" width="100" height="70" style="object-fit:cover; border-radius:6px;">
+           </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <mat-dialog-actions align="end" class="mt-4">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

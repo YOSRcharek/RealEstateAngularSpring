@@ -1,0 +1,191 @@
+
+<div class="flex flex-col">
+  <div class="min-h-screen bg-gray-100 flex">
+    <div class="container mx-auto bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300 mb-10 mt-10 h-fit">
+    <form #formRef="ngForm" (ngSubmit)="saveAnnonce()" class="form bg-white p-6 my-5 relative" novalidate>
+        <h3 class="text-2xl text-gray-900 font-semibold mb-5">➕ Add a New Annonce</h3>
+          <!-- Title -->
+          <div class="flex flex-col gap-2 mt-3">
+            <label for="titre" class="text-gray-700">Title:</label>
+            <input type="text" id="titre" [(ngModel)]="titre" name="titre" placeholder="Annonce Title" class="border p-2"
+                  required minlength="3" #titreRef="ngModel">
+            <div *ngIf="titreRef.invalid && submitted"  class="error-text">
+              Title is required (min 3 characters)
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="flex flex-col gap-2 mt-3">
+            <label for="description" class="text-gray-700">Description:</label>
+            <textarea id="description" [(ngModel)]="description" name="description" rows="3" placeholder="Annonce Description" 
+                      class="border p-2" required minlength="10" #descRef="ngModel"></textarea>
+            <div *ngIf="descRef.invalid && submitted"  class="error-text">
+              Description is required (min 10 characters)
+            </div>
+          </div>
+
+          <!-- Prix + Surface + Nb pièces -->
+          <div class="sm:flex flex-wrap gap-3 mt-3">
+        
+
+
+            <div class="flex flex-col gap-2 flex-1">
+              <label for="surface" class="text-gray-700">Surface (m²)</label>
+              <input type="number" id="surface" [(ngModel)]="surface" name="surface" placeholder="120" class="p-2 border"
+                    required min="1" #surfaceRef="ngModel">
+              <div *ngIf="surfaceRef.invalid && submitted"  class="error-text">
+                Surface is required and must be greater than 0
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2 flex-1">
+              <label for="nbPieces" class="text-gray-700">Rooms</label>
+              <input type="number" id="nbPieces" [(ngModel)]="nbPieces" name="nbPieces" placeholder="4" class="p-2 border"
+                    required min="1" #nbPiecesRef="ngModel">
+              <div *ngIf="nbPiecesRef.invalid && submitted"  class="error-text">
+                Rooms is required and must be greater than 0
+              </div>
+            </div>
+          </div>
+
+          <!-- Bedrooms + Bathrooms + Guest Rooms -->
+          <div class="sm:flex flex-wrap gap-3 mt-3">
+            <div class="flex flex-col gap-2 flex-1">
+              <label for="bedrooms" class="text-gray-700">Bedrooms</label>
+              <input type="number" id="bedrooms" [(ngModel)]="bedrooms" name="bedrooms" placeholder="3" class="p-2 border"
+                    required min="0" #bedroomsRef="ngModel">
+              <div *ngIf="bedroomsRef.invalid && submitted"  class="error-text">
+                Bedrooms must be 0 or more
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2 flex-1">
+              <label for="bathrooms" class="text-gray-700">Bathrooms</label>
+              <input type="number" id="bathrooms" [(ngModel)]="bathrooms" name="bathrooms" placeholder="2" class="p-2 border"
+                    required min="0" #bathroomsRef="ngModel">
+              <div *ngIf="bathroomsRef.invalid && submitted"  class="error-text">
+                Bathrooms must be 0 or more
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2 flex-1">
+              <label for="guestRooms" class="text-gray-700">Guest Rooms</label>
+              <input type="number" id="guestRooms" [(ngModel)]="guestRooms" name="guestRooms" placeholder="1" class="p-2 border"
+                    required min="0" #guestRoomsRef="ngModel">
+              <div *ngIf="guestRoomsRef.invalid && submitted"  class="error-text">
+                Guest Rooms must be 0 or more
+              </div>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <h5 class="mt-5 font-semibold">Amenities</h5>
+          <div class="flex gap-4 mt-2">
+            <label><input type="checkbox" [(ngModel)]="garden" name="garden"> Garden</label>
+            <label><input type="checkbox" [(ngModel)]="airCondition" name="airCondition"> Air Condition</label>
+            <label><input type="checkbox" [(ngModel)]="parking" name="parking"> Parking</label>
+            <label><input type="checkbox" [(ngModel)]="internet" name="internet"> Internet</label>
+            <label><input type="checkbox" [(ngModel)]="pool" name="pool"> Pool</label>
+          </div>
+
+          <!-- TypeBien -->
+          <div class="flex flex-col gap-2 mt-3">
+            <label for="typeBien" class="text-gray-700">Property Type</label>
+            <select id="typeBien" [(ngModel)]="typeBien" name="typeBien" class="p-2 border" required #typeBienRef="ngModel">
+              <option value="" disabled>--Select Type--</option>
+              <option value="MAISON">House</option>
+              <option value="APPARTEMENT">Apartment</option>
+              <option value="TERRAIN">Land</option>
+            </select>
+            <div *ngIf="typeBienRef.invalid && submitted"  class="error-text">
+              Property Type is required
+            </div>
+          </div>
+
+          <!-- Statut -->
+          <div class="flex flex-col gap-2 mt-3">
+            <label for="statut" class="text-gray-700">Status</label>
+            <select id="statut" [(ngModel)]="statut" name="statut" class="p-2 border" required #statutRef="ngModel">
+              <option value="" disabled>--Select Status--</option>
+              <option value="RENT">For Rent</option>
+              <option value="SALE">For Sale</option>
+            </select>
+            <div *ngIf="statutRef.invalid && submitted"  class="error-text">
+              Status is required
+            </div>
+           <div class="flex items-end gap-2">
+  <!-- Input + label -->
+  <div class="flex flex-col flex-1">
+    <label for="prix" class="text-gray-700 mb-1">Price (TND)</label>
+    <input type="number" id="prix" [(ngModel)]="prix" name="prix" class="p-2 border w-full" required>
+    <div *ngIf="submitted" class="error-text">
+      Price is required and must be greater than 0
+    </div>
+  </div>
+
+  <!-- Bouton ou message selon statut -->
+  <ng-container *ngIf="statut === 'SALE'; else rentMsg">
+    <button type="button" class="post-CTA px-4 py-2 h-fit mt-4 ml-5" (click)="predictPrice()">
+      Predict
+    </button>
+  </ng-container>
+  <ng-template #rentMsg>
+    <span class="text-gray-500 italic mt-4 ml-2 text-sm">
+      Price prediction only available for sale
+    </span>
+  </ng-template>
+</div>
+
+          </div>
+        <!-- Upload Images -->
+        <div class="flex flex-col gap-2 mt-2">
+          <label class="text-gray-700">Upload Images :</label>
+          <label for="fileInput" class="edit-icon" style="cursor:pointer; color: #1d4fd8bf; font-weight: 700;">
+            Choose 📷
+          </label>
+          <input id="fileInput" type="file" (change)="onFilesSelected($event)" multiple style="display:none;" />
+
+          <!-- Prévisualisation des fichiers sélectionnés -->
+          <div *ngIf="selectedFiles.length > 0">
+            <p>{{ selectedFiles.length }} fichier(s) sélectionné(s) :</p>
+            <div class="flex gap-2 flex-wrap">
+              <div *ngFor="let file of selectedFiles; let i = index" class="relative">
+                <img [src]="selectedFilesPreview[i]" alt="preview" width="120" height="80"
+                    style="object-fit:cover; border-radius:6px;">
+                <p style="font-size:0.8rem; text-align:center;">{{ file.name }}</p>
+                <button type="button" (click)="removeSelectedFile(i)" 
+                        style="position:absolute; top:0; right:0; background:red; color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer;">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Images déjà existantes -->
+        <div class="flex gap-2 flex-wrap mt-2" *ngIf="existingImages.length > 0">
+          <div *ngFor="let img of existingImages" class="relative">
+            <img [src]="img.url" alt="Annonce image" width="120" height="80" style="object-fit:cover; border-radius:6px;">
+          <button (click)="removeExistingImage(img.id)"> 🗑️</button> </div>
+        </div>
+        <!-- Adresse (Mapbox) -->
+        <div class="flex flex-col gap-2 mt-3">
+          <label for="search" class="text-gray-700">Adresse:</label>
+          <input type="text" id="search" [(ngModel)]="query" [ngModelOptions]="{standalone: true}" (input)="onSearch()" class="border p-2" required #queryRef="ngModel">
+          <div *ngIf="queryRef.invalid && submitted"  class="error-text">
+            Address is required
+          </div>
+
+          <div id="suggestions" *ngIf="suggestions.length" class="suggestions-list">
+            <div *ngFor="let feature of suggestions" (click)="selectFeature(feature)" class="suggestion">
+              {{ feature.place_name }}
+            </div>
+          </div>
+
+          <div id="map" class="map-container mt-2" style="height:300px;"></div>
+        </div>
+      <button type="submit" class="tf-btn primary w-100">
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+    </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="blank-layout-container justify-content-center align-items-center bg-light">
+  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          <div class="text-center">
+            <a [routerLink]="['/dashboard']">
+              <img src="./assets/images/logos/logo.svg" class="align-middle m-2" alt="logo" />
+            </a>
+          </div>
+
+          <div class="row m-t-24 custom-row">
+            <div class="col-6">
+              <button mat-stroked-button class="w-100">
+                <div class="d-flex align-items-center">
+                  <img src="/assets/images/svgs/google-icon.svg" alt="google" width="16" class="m-r-8" />
+                  <span class="d-none d-lg-block">Sign in with Google</span>
+                </div>
+              </button>
+            </div>
+            <div class="col-6">
+              <button mat-stroked-button class="w-100 d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <img src="/assets/images/svgs/facebook-icon.svg" alt="facebook" width="40" class="m-r-4" />
+                  <span class="d-none d-lg-block">Sign in with FB</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="or-border m-t-30">or sign in with</div>
+
+       <form [formGroup]="form" (ngSubmit)="submit()" class="m-t-30">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+    <div *ngIf="submitted && f['email'].errors" class="text-danger">
+      <small *ngIf="f['email'].errors['required']">Email requis</small>
+      <small *ngIf="f['email'].errors['email']">Format invalide</small>
+    </div>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password" />
+    <div *ngIf="submitted && f['password'].errors" class="text-danger">
+      <small *ngIf="f['password'].errors['required']">Mot de passe requis</small>
+      <small *ngIf="f['password'].errors['minlength']">Au moins 6 caractères</small>
+    </div>
+  </mat-form-field>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <mat-checkbox color="primary">Remember me</mat-checkbox>
+    <a (click)="sendResetEmail()" class="text-primary">Forgot Password?</a>
+  </div>
+
+  <button mat-flat-button color="primary" class="w-100 mt-3">Sign In</button>
+
+  <div *ngIf="errorMessage" class="text-danger text-center mt-2">{{ errorMessage }}</div>
+       </form>
+
+          <span class="d-block f-w-500 text-center m-t-24">New to MaterialM?
+            <a [routerLink]="['/authentication/register']" class="text-decoration-none text-primary f-w-500 f-s-14">
+              Create an account</a>
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div> 
+  </div>
+</div>

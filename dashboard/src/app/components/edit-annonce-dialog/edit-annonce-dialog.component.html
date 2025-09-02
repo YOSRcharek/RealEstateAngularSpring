@@ -1,0 +1,113 @@
+
+    <h2 mat-dialog-title>{{ Edit Property }}</h2>
+
+    <mat-dialog-content>
+      <!-- Photo + Upload -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+        <img *ngIf="previewUrls.length || existingImages.length"
+             [src]="previewUrls[0] || existingImages[0]?.url"
+             alt="property-photo"
+             width="150"
+             height="150"
+             style="border-radius: 8px; object-fit: cover;" />
+        <input type="file" accept="image/*" multiple (change)="onFileSelected($event)" />
+        <button mat-stroked-button color="primary" (click)="uploadImages()" [disabled]="!selectedFiles.length">
+          Upload Photo
+        </button>
+      </div>
+
+      <div class="flex gap-2 flex-wrap mt-2" *ngIf="existingImages.length > 0">
+        <div *ngFor="let img of existingImages" class="relative">
+          <img [src]="img.url" alt="Annonce image" width="120" height="80" style="object-fit:cover; border-radius:6px;">
+          <button (click)="removeExistingImage(img.id)"> 🗑️</button>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="annonce.titre" name="titre" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="3" [(ngModel)]="annonce.description" name="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Price</mat-label>
+        <input type="number" matInput [(ngModel)]="annonce.prix" name="prix" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="annonce.typeBien" name="typeBien" required>
+          <mat-option value="MAISON">Maison</mat-option>
+          <mat-option value="APPARTEMENT">Appartement</mat-option>
+          <mat-option value="TERRAIN">Terrain</mat-option>
+          <mat-option value="AUTRE">Autre</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="annonce.statut" name="statut" required>
+          <mat-option value="DISPONIBLE">Disponible</mat-option>
+          <mat-option value="VENDU">Vendu</mat-option>
+          <mat-option value="EN_LOCATION">En location</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Agence</mat-label>
+        <mat-select [(ngModel)]="annonce.agence" name="agence" [compareWith]="compareAgence" required>
+          <mat-option *ngFor="let ag of agences" [value]="ag">{{ ag.nom }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Address</mat-label>
+        <input matInput [(ngModel)]="annonce.adresse" name="adresse" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Surface (m²)</mat-label>
+        <input type="number" matInput [(ngModel)]="annonce.surface" name="surface" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Number of rooms</mat-label>
+        <input type="number" matInput [(ngModel)]="annonce.nbPieces" name="nbPieces" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Bedrooms</mat-label>
+        <input type="number" matInput [(ngModel)]="annonce.bedrooms" name="bedrooms" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Bathrooms</mat-label>
+        <input type="number" matInput [(ngModel)]="annonce.bathrooms" name="bathrooms" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Guest Rooms</mat-label>
+        <input type="number" matInput [(ngModel)]="annonce.guestRooms" name="guestRooms" />
+      </mat-form-field>
+
+      <!-- Options -->
+      <div class="options-grid">
+        <mat-checkbox [(ngModel)]="annonce.garden" name="garden">Garden</mat-checkbox>
+        <mat-checkbox [(ngModel)]="annonce.airCondition" name="airCondition">Air Conditioning</mat-checkbox>
+        <mat-checkbox [(ngModel)]="annonce.parking" name="parking">Parking</mat-checkbox>
+        <mat-checkbox [(ngModel)]="annonce.internet" name="internet">Internet</mat-checkbox>
+        <mat-checkbox [(ngModel)]="annonce.pool" name="pool">Swimming Pool</mat-checkbox>
+      </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="close()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+  

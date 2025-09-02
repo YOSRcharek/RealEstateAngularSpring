@@ -1,0 +1,31 @@
+#price{
+padding-top:50px;
+padding-bottom:50px;
+ }
+.price_1{
+margin-top:30px;
+ }
+.price_1i{
+box-shadow: 0 0 5px rgba(0,0,0,0.15); 
+padding:30px 15px; 
+ }
+.price_1i h6{
+background:#03a9f414;
+display:inline-block;
+padding:8px 15px;
+border-radius:30px;
+cursor:pointer;
+ }
+.price_1i h4{
+margin-top:50px;
+ }
+.price_1i h1{
+font-size:80px;
+ }
+.price_1i h1 span{
+font-size:30px;
+vertical-align:middle;
+ }
+.price_1i ul li{
+margin-top:10px;
+ }

@@ -1,0 +1,146 @@
+<header id="header" class="main-header header-fixed fixed-header">
+  <!-- Header Lower -->
+  <div class="header-lower">
+    <div class="row">                      
+      <div class="col-lg-12">         
+        <div class="inner-header">
+          <div class="inner-header-left">
+            <div class="logo-box flex">
+              <div class="logo">
+                <a [routerLink]="['/']">
+                  <img src="assets/images/logo/logo@2x.png" alt="logo" width="166" height="48">
+                </a>
+              </div>
+            </div>
+            <div class="nav-outer flex align-center">
+              <!-- Main Menu -->
+              <nav class="main-menu show navbar-expand-md">
+                <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
+                  <ul class="navigation clearfix">
+                    <li class="home current"><a [routerLink]="['/']">Home</a></li>
+                    <li class=""><a [routerLink]="['/properties']">Properties</a></li>
+                    <li class=""><a [routerLink]="['/services']">Our Services</a></li>
+                    <li class=""><a [routerLink]="['/benefit']">Benefit</a></li>
+                   <li class=""><a [routerLink]="['/testimonials']">Testimonials</a></li>
+                  
+                  </ul>
+                </div>
+              </nav>
+              <!-- Main Menu End-->
+            </div>
+          </div>
+          <div class="inner-header-right header-account">
+            
+
+       <!-- Si pas connecté -->
+          <a *ngIf="!isLoggedIn" [routerLink]="['/signIn']" class="tf-btn btn-line btn-login">
+            Sign in
+          </a>
+          <a *ngIf="!isLoggedIn" [routerLink]="['/register-agency']" class="tf-btn primary">
+            Register Agency
+          </a>
+                  <!-- Si connecté -->
+               
+   
+
+          <!-- Popup de confirmation -->
+      <!-- BACKDROP -->
+<div 
+  class="modal-backdrop" 
+  *ngIf="showConfirm" 
+  style="background-color: rgba(0,0,0,0.4);">
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" 
+     [class.show]="showConfirm" 
+     [ngStyle]="{display: showConfirm ? 'block' : 'none'}" 
+     tabindex="-1" role="dialog">
+  
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeConfirm()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body text-center">
+        <p>Are you sure you want to log out?</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeConfirm()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="logout()">Yes, log out</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="flat-bt-top" *ngIf="isLoggedIn && isAgency()">
+  <a class="tf-btn primary" [routerLink]="['/add-property']">
+    Submit Property
+  </a>
+</div>
+
+ 
+
+  <div *ngIf="isLoggedIn" class="profil-wrapper" (clickOutside)="closeMenu()">
+                <!-- Bouton Profil -->
+                <a class="profil-btn primary" (click)="toggleMenu($event)">
+                  <i class="fa-solid fa-user"></i>
+                </a>
+
+                <!-- Dropdown Menu -->
+                <div class="profil-dropdown" [class.show]="menuOpen">
+                  <a routerLink="/profil" class="dropdown-item">Profil</a>
+                  <button class="dropdown-item" (click)="openConfirm()">Logout</button>
+                </div>
+              </div>
+
+
+
+          </div>
+          <div class="mobile-nav-toggler mobile-button"><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Menu  -->
+  <div class="close-btn"><span class="icon flaticon-cancel-1"></span></div>    
+  <div class="mobile-menu">
+    <div class="menu-backdrop"></div>                            
+    <nav class="menu-box">
+      <div class="nav-logo"><a [routerLink]="['/']"><img src="assets/images/logo/logo@2x.png" alt="nav-logo" width="174" height="44"></a></div>
+      <div class="bottom-canvas">
+        <div class="login-box flex align-center">
+          <a [routerLink]="['/signIn']" data-bs-toggle="modal">Login</a>
+          <span>/</span>
+          <a [routerLink]="['/signUp']" data-bs-toggle="modal">Register</a>
+        </div>
+        <div class="menu-outer"></div>
+        <div class="button-mobi-sell">
+          <a class="tf-btn primary" [routerLink]="['/add-property']">Submit Property</a>
+        </div> 
+        <div class="mobi-icon-box">
+          <div class="box d-flex align-items-center">
+            <span class="icon icon-phone2"></span>
+            <div>1-333-345-6868</div>
+          </div>
+          <div class="box d-flex align-items-center">
+            <span class="icon icon-mail"></span>
+            <div>therichposts@gmail.com</div>
+          </div>
+        </div>
+      </div>
+    </nav>                
+  </div>
+  <!-- End Mobile Menu -->
+</header>

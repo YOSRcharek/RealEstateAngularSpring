@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>Edit Agency</h2>
+
+<mat-dialog-content>
+
+  <!-- Photo + Upload -->
+  <div class="m-b-16" style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+    <img *ngIf="previewUrl"
+         [src]="previewUrl"
+         alt="Profile"
+         width="150"
+         height="150"
+         style="border-radius: 50%; object-fit: cover;" />
+
+    <input type="file" accept="image/*" (change)="onFileChange($event)" />
+    <button mat-stroked-button color="primary" (click)="uploadPhoto()" [disabled]="!selectedFile">
+      Upload Photo
+    </button>
+  </div>
+
+  <!-- Nom -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="currentUser.nom" name="nom" />
+  </mat-form-field>
+
+  <!-- Email -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="currentUser.email" name="email" />
+  </mat-form-field>
+
+  <!-- Champs spécifiques aux agences -->
+ <ng-container >
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Adresse</mat-label>
+    <input matInput [(ngModel)]="currentUser.agence!.adresse" name="adresse" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Email Perso</mat-label>
+    <input matInput [(ngModel)]="currentUser.agence!.emailPerso" name="emailPerso" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Téléphone</mat-label>
+    <input matInput type="number" [(ngModel)]="currentUser.agence!.telephone" name="telephone" />
+  </mat-form-field>
+</ng-container>
+
+
+  <!-- Status -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="currentUser.confirmeEmail" name="confirmeEmail">
+      <mat-option [value]="true">Confirmed</mat-option>
+      <mat-option [value]="false">Not confirmed</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Date -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Date Created</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="currentUser.dateCreation" name="dateCreation">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+</mat-dialog-actions>

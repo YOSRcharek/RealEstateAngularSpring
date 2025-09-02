@@ -1,0 +1,7 @@
+
+.card-img {
+  width: 100%;
+  height: 220px; /* fixe une hauteur identique */
+  object-fit: cover; /* garde le ratio */
+  border-radius: 6px;
+}

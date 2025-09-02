@@ -1,0 +1,65 @@
+<section class="flat-section"> 
+  <div class="container">
+    <div class="box-title text-center wow fadeInUp">
+      <div class="text-subtitle text-primary">Our Pricing</div>
+      <h3 class="mt-4 title">Choose Your Plan</h3>
+      <p>Unlock advanced analytics and exclusive features.</p>
+    </div>
+
+    <div class="tf-grid-layout md-col-3 wow fadeInUp" data-wow-delay=".2s">
+
+      <!-- FREE PLAN -->
+      <div class="box-service text-center">
+        <div class="content">
+          <h6 class="text-primary">Starter</h6>
+          <h4 class="title">FREE PLAN</h4>
+          <p class="description">Get started with basic access</p>
+          <h2 class="price text-primary"><span>TND</span>0</h2>
+          <ul class="list-none mt-4 mb-4">
+            <li>Basic statistics</li>
+            <li>5 listings per month</li>
+            <li>Email notifications</li>
+            <li>Community support</li>
+          </ul>
+         <a (click)="goToPayment('FREE PLAN', 0)" class="tf-btn btn-line">Get Started</a>
+
+        </div>
+      </div>
+
+      <!-- PRO PLAN -->
+      <div class="box-service text-center">
+        <div class="content">
+          <h6 class="text-primary">Most Popular</h6>
+          <h4 class="title">PRO PLAN</h4>
+          <p class="description">Access advanced statistics</p>
+          <h2 class="price text-success"><span>TND</span>190</h2>
+          <ul class="list-none mt-4 mb-4">
+            <li>Advanced analytics dashboard</li>
+            <li>Unlimited listings</li>
+            <li>Weekly insights reports</li>
+            <li>Priority email support</li>
+          </ul>
+        <a (click)="goToPayment('PRO PLAN', 190)" class="tf-btn btn-line">Subscribe Now</a>
+        </div>
+      </div>
+
+      <!-- PREMIUM PLAN -->
+      <div class="box-service text-center">
+        <div class="content">
+          <h6 class="text-primary">Recommended</h6>
+          <h4 class="title">PREMIUM PLAN</h4>
+          <p class="description">Full access & exclusive features</p>
+          <h2 class="price text-primary"><span>TND</span>490</h2>
+          <ul class="list-none mt-4 mb-4">
+            <li>All PRO features</li>
+            <li>Custom analytics reports</li>
+            <li>API access</li>
+            <li>24/7 premium support</li>
+          </ul>
+        <a (click)="goToPayment('PREMIUM PLAN', 490)" class="tf-btn btn-line">Go Premium</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

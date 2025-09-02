@@ -1,0 +1,49 @@
+.dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  .image-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    img {
+      width: 120px;
+      height: 90px;
+      object-fit: cover;
+    }
+  }
+}
+
+.info-group {
+  margin-bottom: 16px;
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  p {
+    margin: 4px 0;
+  }
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  .amenity {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+}
