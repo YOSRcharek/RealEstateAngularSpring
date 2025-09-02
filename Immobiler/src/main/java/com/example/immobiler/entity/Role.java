@@ -31,7 +31,8 @@ import java.util.Set;
                 Permission.EVALUATE_ANNONCE,
                 Permission.CREATE_RATING,
                 Permission. MAKE_PAYEMENT,
-                Permission.VIEW_STATS
+                Permission.VIEW_STATS,
+                Permission.UPDATE_USER
         )),
 
         USER(Set.of(
@@ -43,7 +44,8 @@ import java.util.Set;
                 Permission.CREATE_RATING,
                 Permission.DELETE_RATING,
                 Permission.CREATE_VISITE,
-                Permission. MAKE_PAYEMENT
+                Permission. MAKE_PAYEMENT,
+                Permission.UPDATE_USER
         ));
 
         private final Set<Permission> permissions;

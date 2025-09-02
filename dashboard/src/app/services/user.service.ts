@@ -25,7 +25,12 @@ export class UserService {
   }
 
   getById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+     const token = localStorage.getItem('token'); // récupère le JWT
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<User>(`${this.apiUrl}/${id}`, { headers });
   }
 
   delete(id: number): Observable<void> {

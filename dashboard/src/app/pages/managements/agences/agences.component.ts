@@ -9,8 +9,6 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/entities/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { EditUserDialogComponent } from 'src/app/components/edit-user-dialog/edit-user-dialog.component';
-import { AddUserDialogComponent } from 'src/app/components/add-user-dialog/add-user-dialog.component';
 import { AgenceService } from 'src/app/services/agence.service';
 import { EditAgenceDialogComponent } from 'src/app/components/edit-agence-dialog/edit-agence-dialog.component';
 import { AddAgenceDialogComponent } from 'src/app/components/add-agence-dialog/add-agence-dialog.component';

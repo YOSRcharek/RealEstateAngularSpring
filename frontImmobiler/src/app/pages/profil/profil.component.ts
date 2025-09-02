@@ -3,7 +3,7 @@ import { User } from 'src/app/entities/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { AgenceService } from 'src/app/services/agence.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Annonce } from 'src/app/entities/annonce.model';
 import { AnnonceService } from 'src/app/services/annonce.service';
@@ -167,27 +167,59 @@ selectTab(tab: string) {
   }
 
   saveChanges() {
-    if (this.currentUser && this.currentUser.agence) {
-      const agence = this.currentUser.agence;
-      agence.proprietaire = { id: this.currentUser.id } as any;
+  if (!this.currentUser) return;
 
-      this.agenceService.update(agence.id, agence).subscribe({
-        next: (res) => {
-          console.log("✅ Agence updated successfully", res);
-          alert("Changes saved successfully!");
+if (this.currentUser.role === 'USER'||this.currentUser.role === 'SUBSCRIBER') {
+  const token = this.authService.getToken(); // JWT stocké
+  const headers = { 'Authorization': `Bearer ${token}` };
 
-          // si une photo est sélectionnée on l’upload aussi
-          if (this.selectedFile) {
-            this.uploadPhoto();
-          }
-        },
-        error: (err) => {
-          console.error("❌ Error updating agence", err);
-          alert("Failed to save changes!");
+  // Créer un objet sans la circularité
+  const userToUpdate = {
+    nom: this.currentUser.nom
+  };
+
+  this.http.put<User>(`http://localhost:8080/api/users/${this.currentUser.id}`, userToUpdate, { headers })
+    .subscribe({
+      next: (res) => {
+        console.log("✅ User updated successfully", res);
+        alert("Profil utilisateur mis à jour !");
+        if (this.selectedFile) {
+          this.uploadPhoto();
         }
-      });
-    }
+      },
+      error: (err) => {
+        console.error("❌ Error updating user", err);
+        alert("Échec de la mise à jour !");
+      }
+    });
+}
+
+
+  else if (this.currentUser.role === 'AGENCE' && this.currentUser.agence) {
+    // 👉 Cas Agence
+    const agence = this.currentUser.agence;
+    agence.proprietaire = { id: this.currentUser.id } as any;
+
+    this.agenceService.update(agence.id, agence).subscribe({
+      next: (res) => {
+        console.log("✅ Agence updated successfully", res);
+        alert("Agency updated successfully!");
+
+        if (this.selectedFile) {
+          this.uploadPhoto();
+        }
+      },
+      error: (err) => {
+        console.error("❌ Error updating agency", err);
+        alert("Failed to update agency!");
+      }
+    });
+  } 
+  else {
+    console.warn("⚠️ Aucun cas valide trouvé pour le rôle:", this.currentUser.role);
   }
+}
+
 
 onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;

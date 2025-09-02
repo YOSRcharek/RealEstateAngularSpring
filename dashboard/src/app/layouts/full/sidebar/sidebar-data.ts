@@ -26,5 +26,9 @@ export const navItems: NavItem[] = [
   displayName: 'Properties',
   iconName: 'mdi:home', // Material Design user icon
   route: '/managements/properties',
+},{
+  displayName: 'Transactions',
+ iconName: 'mdi:credit-card', // pour représenter un transfert/transaction
+  route: '/managements/transactions',
 }
 ];

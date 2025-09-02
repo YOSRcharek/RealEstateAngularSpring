@@ -118,6 +118,6 @@ openAddDialog() {
       this.dataSource = [...this.dataSource];
     }
   });
-  window.location.reload();
+
 }
 }

@@ -33,7 +33,7 @@ public class AnnonceController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('READ_ANNONCE')")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<Annonce> getById(@PathVariable Long id) {
         return annonceService.getById(id)
                 .map(ResponseEntity::ok)

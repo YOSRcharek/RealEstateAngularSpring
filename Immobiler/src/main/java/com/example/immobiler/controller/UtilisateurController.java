@@ -86,15 +86,18 @@ public class UtilisateurController {
             return utilisateurService.register(utilisateur); // génère token email
         }
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('MANAGE_USERS')")
-    public ResponseEntity<Utilisateur> update(@PathVariable Long id, @RequestBody Utilisateur user) {
-        Optional<Utilisateur> existing = utilisateurService.getById(id);
-        if (existing.isPresent()) {
-            user.setId(id);
-            return ResponseEntity.ok(utilisateurService.save(user));
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
+    public ResponseEntity<Utilisateur> update(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<Utilisateur> existingOpt = utilisateurService.getById(id);
+        if (existingOpt.isPresent()) {
+            Utilisateur existing = existingOpt.get();
+            if (updates.containsKey("nom")) existing.setNom((String) updates.get("nom"));
+            // ne touche pas à mot_de_passe
+            return ResponseEntity.ok(utilisateurService.save(existing));
         }
         return ResponseEntity.notFound().build();
     }
+
 
     @GetMapping("/confirm-email")
     @PreAuthorize("permitAll()") // confirmation accessible publiquement

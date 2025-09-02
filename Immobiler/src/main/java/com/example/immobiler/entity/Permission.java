@@ -1,5 +1,7 @@
 package com.example.immobiler.entity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 public enum Permission {
     CREATE_ANNONCE,
     READ_ANNONCE,
@@ -28,5 +30,8 @@ public enum Permission {
     READ_AGENCE,
     DELETE_AGENCE,
     CREATE_AGENCE,
-    MAKE_PAYEMENT
+    MAKE_PAYEMENT,
+    MANAGE_TRANSACTIONS,
+    UPDATE_USER
+
 }
