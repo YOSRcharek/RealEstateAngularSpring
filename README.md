@@ -5,6 +5,9 @@ This project is a **Real Estate Management Application** built with:
 - **Frontend:** Angular  
 - **Backend:** Spring Boot (Java)  
 - **Database:** MySQL (via XAMPP, port `3308`)  
+- **Payment:** Stripe integration for subscription and property payments  
+- **Maps & Location:** Mapbox for addresses and property locations  
+- **AI Price Prediction:** Python AI model for predicting house prices in Tunisia, running via Flask at `http://127.0.0.1:5000`  
 
 ---
 
@@ -18,7 +21,8 @@ Before running the project, make sure you have installed:
 - [XAMPP](https://www.apachefriends.org/) (MySQL on port `3308`)  
 - [Maven](https://maven.apache.org/) (if not included in IntelliJ)  
 - [Java JDK 17+](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)  
-
+- [Python 3.10+](https://www.python.org/) (for AI prediction)  
+- [pip](https://pip.pypa.io/en/stable/) to install Python dependencies  
 ---
 
 ## 🗄 Database Setup (MySQL with XAMPP)
@@ -65,6 +69,7 @@ Before running the project, make sure you have installed:
    Make sure XAMPP MySQL is running on port 3308.
    Start Spring Boot backend → http://localhost:8080
    Start Angular frontend → http://localhost:4200
+   Start Python prediction server → http://127.0.0.1:5000
    Register/Login and test the app 🎉
 
 
