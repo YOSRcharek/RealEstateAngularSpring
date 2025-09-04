@@ -59,10 +59,10 @@ updateUser(user: User, file?: File) {
     const formData = new FormData();
     formData.append('user', new Blob([JSON.stringify(user)], { type: 'application/json' }));
     formData.append('file', file);
-
     return this.http.put<User>(`${this.apiUrl}/updateDash/${user.id}`, formData,{headers});
   } else {
     return this.http.put<User>(`${this.apiUrl}/updateDash/${user.id}`, user,{headers});
+
   }
 }
 updateUserDTO(id: number, user: User, file?: File) {

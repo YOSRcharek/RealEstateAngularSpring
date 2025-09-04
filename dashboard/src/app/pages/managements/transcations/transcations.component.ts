@@ -1,14 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+
 import { MaterialModule } from 'src/app/material.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { TransactionService } from 'src/app/services/transaction.service';
+
 import { UserService } from 'src/app/services/user.service';
 import { Transaction } from 'src/app/entities/transaction.model';
+
 
 @Component({
   selector: 'app-transcations',
@@ -26,6 +30,7 @@ import { Transaction } from 'src/app/entities/transaction.model';
   styles: ``
 })
 export class AppTranscationsComponent implements OnInit {
+
   displayedColumns1: string[] = [
     'photo',
     'nom',
@@ -40,6 +45,7 @@ export class AppTranscationsComponent implements OnInit {
   // ✅ MatTableDataSource au lieu d'un simple tableau
   dataSource1 = new MatTableDataSource<any>();
 
+
   constructor(
     private transactionService: TransactionService,
     private userService: UserService
@@ -48,6 +54,7 @@ export class AppTranscationsComponent implements OnInit {
   ngOnInit(): void {
     this.transactionService.getAll().subscribe({
       next: (transactions) => {
+
         const enrichedTransactions: any[] = [];
 
         transactions.forEach(transaction => {

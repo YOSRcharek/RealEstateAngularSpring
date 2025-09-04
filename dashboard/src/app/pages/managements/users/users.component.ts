@@ -90,7 +90,6 @@ openEditDialog(user: User) {
 
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-      console.log(result);
       this.userService.updateUser(result.user, result.file).subscribe({
         next: (updatedUser) => {
           this.dataSource = this.dataSource.map(u =>

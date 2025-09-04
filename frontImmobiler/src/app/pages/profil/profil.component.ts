@@ -194,8 +194,8 @@ if (this.currentUser.role === 'USER'||this.currentUser.role === 'SUBSCRIBER') {
     });
 }
 
-
   else if (this.currentUser.role === 'AGENCY' && this.currentUser.agence) {
+
     // 👉 Cas Agence
     const agence = this.currentUser.agence;
     agence.proprietaire = { id: this.currentUser.id } as any;
