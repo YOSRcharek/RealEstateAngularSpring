@@ -1,0 +1,174 @@
+ <section class="flat-slider home-1">
+                <div class="container relative">
+                    <div class="row">    
+                        <div class="col-lg-12">
+                            <div class="slider-content">
+                                <div class="heading text-center">
+                                    <h1 class="title-large text-white animationtext slide">
+                                        Find Your
+                                        <span class="tf-text s1 cd-words-wrapper"> 
+                                            <span class="item-text is-visible">Dream Home</span>
+                                            <span class="item-text is-hidden">Perfect Home</span>
+                                        </span>  
+                                    </h1>
+                                    <p class="subtitle text-white body-2 wow fadeInUp" data-wow-delay=".2s">We are a real estate agency that will help you find the best residence you dream of, let’s discuss for your dream house?</p>
+                                </div>
+                                <div class="flat-tab flat-tab-form">
+                                    <ul class="nav-tab-form style-1 justify-content-center" role="tablist">
+                                       <li class="nav-tab-item" role="presentation">   
+                                        <a href="#forRent"
+                                          class="nav-link-item"
+                                          [class.active]="filter.statut === 'RENT'"
+                                          data-bs-toggle="tab"
+                                          (click)="setStatut('RENT')">
+                                          For Rent
+                                        </a>
+                                      </li>
+                                      <li class="nav-tab-item" role="presentation">
+                                        <a href="#forSale"
+                                          class="nav-link-item"
+                                          [class.active]="filter.statut === 'SALE'"
+                                          data-bs-toggle="tab"
+                                          (click)="setStatut('SALE')">
+                                          For Sale
+                                        </a>
+                                      </li>
+                                    </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active show" role="tabpanel">
+                                        <div class="form-sl">
+                                            <!-- Formulaire relié à Spring -->
+                                          <form (ngSubmit)="onSearch()" #searchForm="ngForm" class="form-search">
+  <div class="wd-find-select">
+    <div class="inner-group">
+
+      <!-- Type -->
+      <div class="form-group-1 search-form form-style">
+        <label>Type</label>
+        <div class="group-select">
+          <select [(ngModel)]="filter.type" name="type" class="form-control">
+            <option *ngFor="let t of types" [value]="t.value">{{ t.label }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-group-2 form-style">
+        <label>Location</label>
+        <div class="group-ip">
+          <input type="text" class="form-control"
+                 placeholder="Search Location"
+                 [(ngModel)]="filter.adresse" name="adresse">
+          <a href="#" class="icon icon-location"></a>
+        </div>
+      </div>
+
+      <!-- Keyword -->
+      <div class="form-group-3 form-style">
+        <label>Keyword</label>
+        <input type="text" class="form-control"
+               placeholder="Search Keyword"
+               [(ngModel)]="filter.titre" name="titre">
+      </div>
+    </div>
+
+    <!-- Boutons -->
+    <div class="box-btn-advanced">
+      <button type="button" class="tf-btn btn-line filter-advanced pull-right"
+              (click)="toggleAdvanced($event)">
+        <span class="text-1">Search advanced</span>
+      </button>
+      <button type="submit" class="tf-btn btn-search primary">
+        Search <i class="icon icon-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Advanced Search -->
+  <div class="wd-search-form" [class.show]="searchAdvancedVisible">
+
+    <!-- Price & Size -->
+    <div class="grid-2 group-box group-price">
+      <div class="widget-price">
+        <label class="fw-6">Price:</label>
+        <input type="number" placeholder="Min" [(ngModel)]="filter.minPrice" name="minPrice"
+               class="form-control form-control-sm d-inline w-auto">
+        -
+        <input type="number" placeholder="Max" [(ngModel)]="filter.maxPrice" name="maxPrice"
+               class="form-control form-control-sm d-inline w-auto">
+      </div>
+
+      <div class="widget-price">
+        <label class="fw-6">Surface:</label>
+        <input type="number" placeholder="Min" [(ngModel)]="filter.minSurface" name="minSurface"
+               class="form-control form-control-sm d-inline w-auto">
+        -
+        <input type="number" placeholder="Max" [(ngModel)]="filter.maxSurface" name="maxSurface"
+               class="form-control form-control-sm d-inline w-auto">
+      </div>
+    </div>
+
+    <!-- Dropdowns -->
+    <div class="grid-2 group-box mt-3">
+      <div class="box-select">
+        <label class="fw-6">Rooms</label>
+        <select [(ngModel)]="filter.rooms" name="rooms" class="form-select form-select-sm">
+          <option *ngFor="let r of rooms" [value]="r">{{ r }}</option>
+        </select>
+      </div>
+
+      <div class="box-select">
+        <label class="fw-6">Bathrooms</label>
+        <select [(ngModel)]="filter.bathrooms" name="bathrooms" class="form-select form-select-sm">
+          <option *ngFor="let b of bathrooms" [value]="b">{{ b }}</option>
+        </select>
+      </div>
+
+      <div class="box-select">
+        <label class="fw-6">Bedrooms</label>
+        <select [(ngModel)]="filter.bedrooms" name="bedrooms" class="form-select form-select-sm">
+          <option *ngFor="let bd of bedrooms" [value]="bd">{{ bd }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Amenities -->
+    <div class="group-checkbox mt-3">
+      <div class="text-1 text-black-2 fw-6 mb-2">Amenities:</div>
+      <div class="group-amenities grid-6 d-flex flex-wrap gap-2">
+        <fieldset class="form-check me-3">
+          <input type="checkbox" id="airCondition" [(ngModel)]="filter.airCondition" name="airCondition" class="form-check-input">
+          <label for="airCondition" class="form-check-label">Air Condition</label>
+        </fieldset>
+
+        <fieldset class="form-check me-3">
+          <input type="checkbox" id="parking" [(ngModel)]="filter.parking" name="parking" class="form-check-input">
+          <label for="parking" class="form-check-label">Parking</label>
+        </fieldset>
+
+        <fieldset class="form-check me-3">
+          <input type="checkbox" id="internet" [(ngModel)]="filter.internet" name="internet" class="form-check-input">
+          <label for="internet" class="form-check-label">Internet</label>
+        </fieldset>
+
+        <fieldset class="form-check me-3">
+          <input type="checkbox" id="pool" [(ngModel)]="filter.pool" name="pool" class="form-check-input">
+          <label for="pool" class="form-check-label">Pool</label>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+                            </div>
+                            
+                        </div>    
+                    </div>
+                </div>
+                <div class="overlay"></div>
+            </section> 

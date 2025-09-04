@@ -1,0 +1,260 @@
+
+
+<div class="container">
+<div class="row mt-20">
+     
+    <!-- Partie gauche (8 colonnes) -->
+    <div class="col-sm-8">
+        
+	  <div class="center_detail_1l clearfix">
+	   <div class="center_detail_1li clearfix">
+       <h3 class="title mt-4"> {{ annonce.titre }} <span class="span_1"> {{ getStatutLabel(annonce.statut) }}</span> <span class="span_2 pull-right">{{ annonce.prix }} TND</span></h3>
+        <div class="text-subtitle text-primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+        <!-- Contour du marker -->
+        <path d="M12 22s-8-5.373-8-12a8 8 0 1 1 16 0c0 6.627-8 12-8 12z"
+                stroke="#1562dfe0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        
+        <!-- Cercle central -->
+        <circle cx="12" cy="10" r="3"
+                stroke="#1562dfe0" stroke-width="2" fill="white"/>
+        </svg>
+        {{ annonce.adresse }}</div>
+
+	   </div>
+	   <div class="center_detail_1li1 clearfix">
+        <h4 class="mgt head_1">Gallery</h4>
+		<div id="main_area">
+                <!-- Slider -->
+                <div class="row">
+                    <div class="col-sm-12" id="slider">
+                        <!-- Top part of the slider -->
+                        <div class="row">
+                            <div class="col-sm-12" id="carousel-bounding-box">
+                              <div class="carousel-wrapper flex-shrink-0">
+                                <div id="carouselAnnonce{{ annonce.id }}" class="carousel slide" data-bs-ride="carousel">
+                                    
+                                    <!-- Images -->
+                                    <div class="carousel-inner">
+                                    <div *ngFor="let img of annonce.images; let i = index"
+                                        class="carousel-item"
+                                        [class.active]="i === 0">
+                                        <img [src]="getImageBase64(img)" 
+                                            class="d-block w-100 imgCarousel" 
+                                            alt="Image annonce">
+                                    </div>
+                                    </div>
+
+                                    <!-- Flèches navigation -->
+                                    <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselAnnonce' + annonce.id" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon custom-arrow" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                    </button>
+
+                                    <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselAnnonce' + annonce.id" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon custom-arrow" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div><!--/Slider-->
+
+        </div>
+	   </div>
+	   <div class="center_detail_1li1 clearfix">
+        <h4 class="mgt head_1">Description</h4><br><br>
+		<p>{{ annonce.description}}</p>
+	   </div>
+	   <div class="center_detail_1li2 clearfix">
+        <h4 class="mgt head_1">Property Details</h4><br><br>
+      <div class="center_detail_1li2i clearfix">
+        <div class="col-sm-4 space_left">
+        <h6><span class="bold">Property Type:</span>    {{ getTypeBienLabel(annonce.typeBien) }}</h6>
+        </div>
+        <div class="col-sm-4 space_left">
+        <h6><span class="bold">Property Status:</span> {{ getStatutLabel(annonce.statut) }}</h6>
+        </div>
+		 </div>
+    
+		 <div class="center_detail_1li2i clearfix">
+		  <div class="col-sm-4 space_left">
+		 <div class="center_detail_1li2i clearfix">
+
+        <div class="space_left" *ngIf="annonce.prix > 0">
+            <h6>
+            <span class="bold">
+                <i class="fa fa-money" style="color:#1562dfe0;"></i> Property Price:
+            </span> 
+            {{ annonce.prix | currency:'TND':'symbol':'1.0-0' }}
+            </h6>
+        </div>
+
+        <div class="space_left" *ngIf="annonce.surface > 0">
+            <h6>
+            <span class="bold">
+                <i class="fa fa-expand" style="color:#1562dfe0;"></i> Property Surface:
+            </span> 
+            {{ annonce.surface }} m²
+            </h6>
+        </div>
+
+        <div class="space_left" *ngIf="annonce.nbPieces > 0">
+            <h6>
+            <span class="bold">
+                <i class="fa fa-home" style="color:#1562dfe0;"></i> Rooms:
+            </span> 
+            {{ annonce.nbPieces || 0}}
+            </h6>
+        </div>
+
+        <div class="space_left" >
+            <h6>
+            <span class="bold">
+                <i class="fa fa-bed" style="color:#1562dfe0;"></i> Bedrooms:
+            </span> 
+            {{ annonce.bedrooms || 0}}
+            </h6>
+        </div>
+        <div class="space_left" >
+            <h6>
+            <span class="bold">
+                <i class="fa fa-users" style="color:#1562dfe0;"></i> Guest Rooms:
+            </span> 
+            {{ annonce.guestRooms || 0}}
+            </h6>
+        </div>
+
+        <div class="space_left" >
+            <h6>
+            <span class="bold">
+                <i class="fa fa-bath" style="color:#1562dfe0;"></i> Bath:
+            </span> 
+            {{ annonce.bathrooms || 0}}
+            </h6>
+        </div>
+        </div>
+        </div><br><br>
+		<h4 class="mgt head_1">Amenities</h4>
+<br><br>
+<div class="center_detail_1li2i clearfix row">
+
+<div class="col-sm-4 space_left" *ngIf="annonce.airCondition">
+  <h5><i class="fa fa-snowflake col_1"></i> Air Cond</h5>
+</div>
+
+<div class="col-sm-4 space_left" *ngIf="annonce.pool">
+  <h5><i class="fa fa-swimming-pool col_1"></i> Pool</h5>
+</div>
+
+<div class="col-sm-4 space_left" *ngIf="annonce.internet">
+  <h5><i class="fa fa-wifi col_1"></i> Internet</h5>
+</div>
+
+<div class="col-sm-4 space_left" *ngIf="annonce.garden">
+  <h5><i class="fa fa-seedling col_1"></i> Garden</h5>
+</div>
+
+<div class="col-sm-4 space_left" *ngIf="annonce.parking">
+  <h5><i class="fa fa-car col_1"></i> Parking</h5>
+</div>
+
+
+</div>
+
+	   </div>
+	</div>
+
+	<div class="center_detail_1li1 clearfix">
+  <h4 class="mgt head_1">Location</h4><br><br><br>
+  <div id="mapAnnonce" style="width: 100%; height: 400px; border-radius: 8px;"></div>
+</div>
+
+
+
+	 <div class="center_detail_1li5 clearfix" *ngIf="isUser()">
+    <h4 class="mgt head_1">Add Review</h4><br><br>
+     <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+  <p class="bold">Your rating:</p>
+  <span>
+    <i *ngFor="let star of stars; let i = index"
+       (click)="setRating(i+1)"
+       class="fa"
+       [ngClass]="i < review.rating ? 'fa-star text-warning' : 'fa-star-o text-muted'"
+       style="cursor:pointer; font-size: 20px; margin-right: 5px;">
+    </i>
+  </span>
+<div class="mb-3 mt-3"></div>
+  <textarea [(ngModel)]="review.comment" name="comment" placeholder="Write your review..." required></textarea>
+  
+  <button type="submit" class="tf-btn primary" [disabled]="!reviewForm.form.valid">Submit Review</button>
+    </form>
+
+   
+  </div>
+	 
+    </div>
+    </div>
+      <div class="col-sm-4">
+	   <div class="center_detail_1r clearfix">
+	  
+		<div class="center_detail_1ri1 clearfix">
+		  <h4 class="mgt"> Agent Information</h4>
+		  <hr>
+		  <div class="center_detail_1ri1i1 clearfix">
+         <img [src]="'data:image/jpeg;base64,' + annonce.agence?.proprietaire?.photo"class="avatar avt-60 round" alt="agence">
+			<h5 class="bold mgt">{{ annonce.agence?.nom }}</h5>
+		  </div>
+		  <h6><i class="fa fa-map-marker col_1"></i>{{ annonce.agence?.adresse }}</h6>
+		  <h6><i class="fa fa-phone col_1"></i> {{ annonce.agence?.telephone }}</h6>
+		  <h6><i class="fa fa-envelope col_1"></i> <a href="#">{{ annonce.agence?.emailPerso }}</a></h6><br>
+		</div>
+		
+	    <div class="center_detail_1ri1 clearfix">
+		  <h4 class="mgt"> Reviews</h4>
+		  <hr>
+		<div class="feature_2 clearfix">
+      <div id="carouselRating" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let rating of ratings; let i = index" [class.active]="i === 0">
+            <div class="col-sm-12 space_all">
+              <div class="center_detail_1li4i clearfix">
+                  <img [src]="'data:image/jpeg;base64,' + annonce.agence?.proprietaire?.photo"class="avatar avt-60 round" alt="agence">
+                <div class="col-sm-10">
+                  <h5 class="bold mgt col_1">{{ rating.user?.nom }}
+                    <span class="col_4 pull-right">
+                      <i *ngFor="let star of [].constructor(rating.note ?? 0)" class="fa fa-star"></i>
+                      <i *ngFor="let empty of [].constructor(5 - (rating.note ?? 0))" class="fa fa-star-o"></i>
+                    </span>
+                  </h5>
+                  <h6>{{ rating.date | date:'mediumDate' }}</h6>
+                  <p>{{ rating.commentaire }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flèches navigation -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselRating" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselRating" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+	   </div> 
+	 </div>
+      </div>
+
+ </div>
+  </div>
+

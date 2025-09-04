@@ -1,0 +1,117 @@
+<div class="app-add-user">
+  <a mat-button class="all-access-pass-btn text-dark p-x-16" (click)="openAddDialog()">
+    <div class="d-flex align-items-center gap-8 f-s-16 f-w-400">
+      <i class="iconify icon-18 d-flex" data-icon="mdi:plus"></i>
+      Add Agency
+    </div>
+  </a>
+</div>
+
+<mat-card class="cardWithShadow">
+
+  <mat-card-content>
+    <mat-card-title>Agencies</mat-card-title>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="w-100">
+
+        <!-- Photo -->
+       <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef>Picture</th>
+        <td mat-cell *matCellDef="let user">
+            <img [src]="user.photoUrl" alt="photo" width="60" class="rounded" />
+        </td>
+        </ng-container>
+
+
+        <!-- Nom -->
+        <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let user">{{ user.nom }}</td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+         <!-- Phone -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Phone</th>
+          <td mat-cell *matCellDef="let user">{{ user.agence.telephone }}</td>
+        </ng-container>
+
+         <!-- Adresse -->
+        <ng-container matColumnDef="adresse">
+          <th mat-header-cell *matHeaderCellDef>Adresse</th>
+          <td mat-cell *matCellDef="let user">{{ user.agence.adresse }}</td>
+        </ng-container>
+
+          <!-- Personnal Email -->
+        <ng-container matColumnDef="personalEmail">
+          <th mat-header-cell *matHeaderCellDef>Personal Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.agence.emailPerso }}</td>
+        </ng-container>
+  
+    <ng-container matColumnDef="proprietes">
+  <th mat-header-cell *matHeaderCellDef>Properties</th>
+  <td mat-cell *matCellDef="let user">
+    <a mat-button (click)="goToProperties(user.agence.id)">
+      Show
+    </a>
+  </td>
+</ng-container>
+
+
+
+        <!-- Date Creation -->
+        <ng-container matColumnDef="dateCreation">
+          <th mat-header-cell *matHeaderCellDef>Date Created</th>
+          <td mat-cell *matCellDef="let user">{{ user.dateCreation | date:'medium' }}</td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let user">
+            <span
+              [ngClass]="{
+                'bg-light-success text-success': user.confirmeEmail,
+                'bg-light-warning text-warning': !user.confirmeEmail
+              }"
+              class="rounded f-w-600 p-6 p-y-4 f-s-12"
+            >
+              {{ user.confirmeEmail ? 'Confirmed' : 'Not confirmed' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let user">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+             <button mat-menu-item (click)="openEditDialog(user)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+
+              <button mat-menu-item (click)="openConfirmDialog(user.id)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

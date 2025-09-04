@@ -1,0 +1,37 @@
+package com.example.immobiler.entity;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
+public enum Permission {
+    CREATE_ANNONCE,
+    READ_ANNONCE,
+    UPDATE_ANNONCE,
+    DELETE_ANNONCE,
+    EVALUATE_ANNONCE,
+    VIEW_STATS,
+    MANAGE_USERS,
+    MANAGE_ROLES,
+    MANAGE_ZONES,
+    ACCESS_DASHBOARD,
+    READ_VISITE,
+    CREATE_VISITE,
+    DELETE_VISITE,
+    READ_ZONE,
+    CREATE_ZONE,
+    UPDATE_ZONE,
+    DELETE_ZONE,
+    READ_RATING,
+    CREATE_RATING,
+    DELETE_RATING,
+    READ_IMAGE,
+    CREATE_IMAGE,
+    DELETE_IMAGE,
+    UPDATE_AGENCE,
+    READ_AGENCE,
+    DELETE_AGENCE,
+    CREATE_AGENCE,
+    MAKE_PAYEMENT,
+    MANAGE_TRANSACTIONS,
+    UPDATE_USER
+
+}

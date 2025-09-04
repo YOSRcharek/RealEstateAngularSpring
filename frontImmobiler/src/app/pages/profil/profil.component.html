@@ -1,0 +1,294 @@
+<div class="flex flex-col">
+<div class="container">
+  <div class="profile-card">
+
+    <!-- Header -->
+   <div class="profile-header">
+  <div class="main-profile">
+<div class="profile-image" style="position: relative; display: inline-block;">
+  
+  <!-- Image principale -->
+  <img *ngIf="photoUrl"
+       [src]="photoUrl"
+       alt="Profile"
+       width="150"
+       height="150"
+       style="border-radius: 50%; object-fit: cover;">
+
+  <!-- Bouton modifier -->
+  <label for="fileInput" 
+         class="edit-icon">
+   ✏️ E
+  </label>
+  <input type="file" id="fileInput" style="display: none;" (change)="onFileSelected($event)">
+
+</div>
+
+
+    <div class="profile-names">
+      <h1 class="username">{{ currentUser.agence!.nom }}</h1>
+      <small class="page-title">{{ currentUser.email }}</small>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Body -->
+    <div class="profile-body">
+      <div class="profile-actions">
+        <button class="tab-btn" 
+                [class.active]="selectedTab === 'account'" 
+                (click)="selectTab('account')">Account</button>
+        <button class="tab-btn" 
+                [class.active]="selectedTab === 'announces'" 
+                (click)="selectTab('announces')" 
+                *ngIf="isAgency()">Announces</button>
+     <button class="tab-btn" 
+        [class.active]="selectedTab === 'Statistics'" 
+        (click)="selectTab('Statistics')"
+        *ngIf="isSubscriber()">Statistics</button>
+
+        <button class="tab-btn" 
+                [class.active]="selectedTab === 'settings'" 
+                (click)="selectTab('settings')">Settings</button>
+    <!-- bio 
+        <section class="bio">
+          <div class="bio-header"><i class="fa fa-info-circle"></i> Bio</div>
+          <p class="bio-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+        </section>
+        Tab -->
+      </div>
+
+      <div *ngIf="selectedTab === 'account'" class="account-info">
+        <!-- Account Tab -->
+          <div class="data">
+             <h2>👤 Account Information</h2>
+            <p>Here you can manage your personal account details.</p>
+     <!-- Formulaire complet pour les agences -->
+            <!-- Formulaire complet pour AGENCY -->
+        <form class="account-form" (ngSubmit)="confirmAndSave()" *ngIf="currentUser && isAgency()">
+          <label>Agency Name</label>
+          <input type="text" [(ngModel)]="currentUser.nom" name="agencyName" placeholder="TeknoCasa" />
+
+          <label>Email</label>
+          <input type="email" [(ngModel)]="currentUser.agence!.emailPerso" name="email" placeholder="contact@teknocasa.com" />
+
+          <label>Phone</label>
+          <input type="text" [(ngModel)]="currentUser.agence!.telephone" name="phone" placeholder="+216 22 333 444" />
+
+          <label>Address</label>
+          <input type="text" [(ngModel)]="currentUser.agence!.adresse" name="address" placeholder="Tunis, Tunisia" />
+
+          <button class="post-CTA" type="submit">💾 Save Changes</button>
+          </form>
+
+          <!-- Formulaire simplifié pour USER ou SUBSCRIBER -->
+          <form class="account-form" (ngSubmit)="confirmAndSave()" *ngIf="currentUser && (isUser() || isSubscriber())">
+            <label>Name</label>
+            <input type="text" [(ngModel)]="currentUser.nom" name="name" placeholder="John Doe" />
+
+           
+            <button class="post-CTA" type="submit">💾 Save Changes</button>
+          </form>
+
+
+         </div>
+        <!-- Announces Tab --> 
+      </div>
+      <div *ngIf="selectedTab === 'announces'">
+        <div class="data">
+          <h2>📢 Announces</h2>
+          <p>Here are your latest announces and real estate posts.</p>
+          <button class="post-CTA" (click)="goToAddProperty()">➕ Add New Announce</button>
+
+          <div class="announce-list">
+            <div class="announce-item" *ngFor="let annonce of annonces">
+          <div class="annonce-card d-flex align-items-start gap-3 p-2 border rounded mb-3">
+            <!-- Carousel à gauche -->
+            <div class="carousel-wrapper flex-shrink-0">
+              <div id="carouselAnnonce{{ annonce.id }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div *ngFor="let img of annonce.images; let i = index" 
+                      class="carousel-item" 
+                      [class.active]="i === 0">
+                    <img [src]="getImageBase64(img)" class="d-block imgCarousel" alt="Image annonce">
+                  </div>
+                </div>
+                <!-- Flèches -->
+                <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselAnnonce' + annonce.id" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon custom-arrow" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselAnnonce' + annonce.id" data-bs-slide="next">
+                  <span class="carousel-control-next-icon custom-arrow" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Infos à droite -->
+            <div class="annonce-info flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <h3>{{ annonce.titre }}</h3>
+              <p class="description">{{ annonce.description }}</p>
+
+                <span class="status" [ngClass]="getStatusClass(annonce.statut)">
+            {{ annonce.statut }}
+          </span>
+
+            <p class="info-line">
+            <span class="label">Prix:</span> {{ annonce.prix }}
+            <span class="separator">|</span>
+            <span class="label">Type:</span> {{ annonce.typeBien }}
+            <span class="separator">|</span>
+            <span class="label">Surface:</span> {{ annonce.surface }} m²
+          </p>
+          <p class="info-line">
+            <span class="label">Adresse:</span> {{ annonce.adresse }}
+          </p>
+
+              </div>
+              
+              <!-- Boutons en ligne -->
+              <!-- Boutons dans ta liste -->
+          <div class="btn-row d-flex gap-2 mt-2">
+          <button class="post-CTA" 
+                  *ngIf="annonce.id != null" 
+                  (click)="editAnnonce(annonce.id)">✏️ Edit</button>
+
+            
+            <button class="post-CTA" (click)="confirmDelete(annonce)">🗑️ Delete</button>
+            <button class="post-CTA"  (click)="goToDetail(annonce.id)"> Details</button>
+          </div>
+
+          <!-- Overlay -->
+          <div class="modal-backdrop" *ngIf="showConfirm" style="background-color: rgba(0,0,0,0.4);"></div>
+
+          <!-- Modal -->
+          <div class="modal fade" [class.show]="showConfirm" [ngStyle]="{display: showConfirm ? 'block' : 'none'}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Confirmation</h5>
+                  <button type="button" class="close" (click)="closeConfirm()">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                  <p>Are you sure you want to delete this annonce?</p>
+                </div>
+                <div class="modal-footer">
+                  <button class="tf-btn primary" (click)="deleteAnnonce()">Yes, Delete</button>
+                  <button class="tf-btn" (click)="closeConfirm()">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            </div>
+      </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+        <!-- Settings Tab -->
+        <div *ngIf="selectedTab === 'settings'">
+          <div class="data">
+            <h2>⚙️ Settings</h2>
+            <p>Update your preferences, password and privacy settings here.</p>
+
+            <!-- Options -->
+            <div class="settings-options">
+              <button (click)="showForm = 'password'" class="post-CTA"
+                      [class.active]="showForm === 'password'">Change Password</button>
+              <button (click)="showForm = 'delete'" class="post-CTA"
+                      [class.active]="showForm === 'delete'">Delete Account</button>
+            </div>
+
+                  <!-- Formulaire Changer Password -->
+              <form *ngIf="showForm === 'password'" 
+                    class="settings-form" 
+                    #passwordFormRef="ngForm" 
+                    (ngSubmit)="changePassword(passwordFormRef)">
+
+                <label>Old Password</label>
+                <input type="password" 
+                      [(ngModel)]="passwordForm.oldPassword" 
+                      name="oldPassword" 
+                      #oldPassword="ngModel"
+                      required />
+                <div *ngIf="oldPassword.invalid && oldPassword.touched" style="color: red; font-size: 13px;">
+                  Old password is required
+                </div>
+
+                <label>New Password</label>
+                <input type="password" 
+                      [(ngModel)]="passwordForm.newPassword" 
+                      name="newPassword" 
+                      #newPassword="ngModel"
+                      required minlength="6" />
+                <div *ngIf="newPassword.invalid && newPassword.touched" style="color: red; font-size: 13px;">
+                  <span *ngIf="newPassword.errors?.['required']">New password is required</span>
+                  <span *ngIf="newPassword.errors?.['minlength']">Minimum 6 characters</span>
+                </div>
+
+                <button type="submit" 
+                        class="post-CTA" 
+                        [disabled]="passwordFormRef.invalid">💾 Save Settings</button>
+              </form>
+
+
+            <!-- Confirmation Suppression compte -->
+            <div *ngIf="showForm === 'delete'" class="delete-account">
+              <p>Are you sure you want to delete your account? This action is irreversible.</p>
+              <button (click)="deleteAccount()" class="post-CTA">🗑️ Delete Account</button>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div *ngIf="selectedTab === 'statistics'" class="statistics-container">
+           <div class="data">
+            <h2>📊 Statistics</h2>
+            <p>View your account statistics and activity here.</p>
+
+            <div class="stats-cards">
+              <div class="card">
+                <h3>{{ totalVisits }}</h3>
+                <p>Total Visits</p>
+                <small>Last Week: {{ visitsLastWeek }} | This Week: {{ visitsThisWeek }}</small>
+              </div>
+
+              <div class="card">
+                <h3>{{ totalAnnonces }}</h3>
+                <p>Total Ads</p>
+                <small>Last Week: {{ annoncesLastWeek }}</small>
+              </div>
+
+              <div class="card">
+                <h3>{{ totalUsers }}</h3>
+                <p>Users</p>
+                <small>Subscribers: {{ totalSubscribers }}</small>
+              </div>
+
+              <div class="card">
+                <h3>{{ totalAgencies }}</h3>
+                <p>Agencies</p>
+              </div>
+            </div>
+
+            <!-- Optional simple bar chart -->
+            <div class="chart-container">
+              <div class="bar" [style.height.%]="visitsThisWeek / totalVisits * 100">Visits</div>
+              <div class="bar" [style.height.%]="annoncesLastWeek / totalAnnonces * 100">Ads</div>
+              <div class="bar" [style.height.%]="totalSubscribers / totalUsers * 100">Subscribers</div>
+            </div>
+         </div>
+        </div>
+
+    </div>
+
+  </div>
+</div>
+</div>   

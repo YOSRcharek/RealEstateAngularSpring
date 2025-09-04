@@ -1,0 +1,66 @@
+.profil-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Bouton profil agrandi */
+.profil-btn {
+  width: 44px;          /* bouton plus grand */
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.2);
+  background-color: #ffffff;  /* fond blanc */
+  color: #161e2d;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;      /* icône plus grande */
+  transition: all 0.2s ease;
+  font-weight: bolder;
+  font-family: inherit;
+}
+
+.profil-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* Dropdown */
+.profil-dropdown {
+  position: absolute;
+  top: 50px;       /* juste en dessous du bouton */
+  right: 0px;
+  width: 150px;    /* plus large */
+  background-color: #ffffff;  /* fond blanc */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  z-index: 5;
+  text-align: end;
+  font-weight: bolder;
+  
+  font-family: inherit;
+}
+
+.profil-dropdown.show {
+  display: flex;
+}
+
+.dropdown-item {
+  padding: 12px 16px; /* un peu plus grand */
+  font-size: 16px;
+  color: #161e2d;
+  text-align: end;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 24px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}

@@ -1,0 +1,14 @@
+.pagination .page-item.active .page-link {
+  background-color: #007bff; /* bleu bootstrap */
+  border-color: #007bff;
+  color: #fff;
+}
+
+.pagination .page-link {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination .page-link:hover {
+  background-color: #f0f0f0;
+}
